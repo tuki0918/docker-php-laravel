@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  app:
+    container_name: app
+    image: alpine
+    volumes:
+      - ./www:/usr/share/nginx/html
+    command: /bin/true
+  php:
+    container_name: php
+    image: php:7-fpm-alpine
+    ports:
+      - "9000:9000"
+    links:
+      - database
+    volumes_from:
+      - app
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    volumes_from:
+      - app
+  database:
+    container_name: database
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - app
+    environment:
+      MYSQL_DATABASE: myapp
+      MYSQL_ROOT_PASSWORD: secret
