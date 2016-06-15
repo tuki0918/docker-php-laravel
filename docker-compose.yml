@@ -9,7 +9,7 @@ services:
     command: /bin/true
   php:
     container_name: php
-    image: php:7-fpm-alpine
+    build: .
     ports:
       - "9000:9000"
     links:
