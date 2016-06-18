@@ -2,6 +2,7 @@ version: '2'
 
 services:
   app:
+    restart: always
     container_name: app
     image: alpine
     volumes:
@@ -9,6 +10,7 @@ services:
     command: /bin/true
 
   php:
+    restart: always
     container_name: php
     build: ./etc
     ports:
@@ -19,6 +21,7 @@ services:
       - app
 
   nginx:
+    restart: always
     container_name: nginx
     image: nginx:alpine
     volumes:
@@ -34,6 +37,7 @@ services:
       VIRTUAL_HOST: "docker.loc,*.docker.loc"
 
   database:
+    restart: always
     container_name: database
     image: mysql:5.7
     ports:
@@ -45,8 +49,9 @@ services:
       MYSQL_ROOT_PASSWORD: secret
 
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    restart: always
     container_name: nginx-proxy
+    image: jwilder/nginx-proxy
     ports:
       - "80:80"
     volumes:
