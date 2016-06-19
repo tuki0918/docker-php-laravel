@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CREATE_USER='admin'
+CREATE_PASSWORD='adminpass'
+
+mysql -u root -p${MYSQL_ROOT_PASSWORD} \
+  -e "GRANT ALL ON *.* TO ${CREATE_USER}@'%' IDENTIFIED BY '${CREATE_PASSWORD}';"
+
+mysql -u ${CREATE_USER} -p${CREATE_PASSWORD} \
+  -e "CREATE DATABASE database01 DEFAULT CHARACTER SET utf8;"
+
+mysql -u ${CREATE_USER} -p${CREATE_PASSWORD} \
+  -e "CREATE DATABASE database02 DEFAULT CHARACTER SET utf8;"
