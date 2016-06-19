@@ -37,6 +37,7 @@ services:
       - app
     environment:
       VIRTUAL_HOST: "docker.loc,*.docker.loc"
+      HTTPS_METHOD: "noredirect" # not working ?
 
   database:
     restart: always
