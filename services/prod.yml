@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+
+  app:
+    volumes:
+      - /home/ubuntu/src:/usr/share/nginx/html
+      - /home/ubuntu/etc/conf.d:/etc/nginx/conf.d
+      - /home/ubuntu/etc/initdb.d:/docker-entrypoint-initdb.d
+
+  nginx-proxy:
+    volumes:
+      - /home/ubuntu/etc/certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  php:
+    links:
+      - database
+
+  database:
+    restart: always
+    container_name: database
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - app
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_ROOT_PASSWORD: secret
