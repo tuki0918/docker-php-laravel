@@ -8,6 +8,8 @@ services:
     volumes:
       # - ./src:/usr/share/nginx/html
       - /home/ubuntu/src:/usr/share/nginx/html
+      # - ./etc/conf.d:/etc/nginx/conf.d
+      - /home/ubuntu/etc/conf.d:/etc/nginx/conf.d
       - /home/ubuntu/etc/initdb.d:/docker-entrypoint-initdb.d
     command: /bin/true
 
@@ -26,9 +28,6 @@ services:
     restart: always
     container_name: nginx
     image: nginx:alpine
-    volumes:
-      # - ./etc/conf.d:/etc/nginx/conf.d
-      - /home/ubuntu/etc/conf.d:/etc/nginx/conf.d
     ports:
       - "10080:80"
       - "10443:443"
